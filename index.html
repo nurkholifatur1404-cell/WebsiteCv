@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV – Moh.Nur Kholifatur Hikmah | Teknik Infrastruktur Sipil</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ========== CSS VARIABLES ========== */
+:root {
+  --blue-deep:    #0a1628;
+  --blue-dark:    #0d2244;
+  --blue-mid:     #1a3a6e;
+  --blue-bright:  #1e6dbf;
+  --blue-accent:  #2196f3;
+  --blue-light:   #64b5f6;
+  --cyan:         #00e5ff;
+  --cyan-soft:    #b2ebf2;
+  --white:        #f0f8ff;
+  --white-muted:  #c8dff5;
+  --gold:         #f0c040;
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --shadow-deep:  0 20px 60px rgba(0,0,50,0.5);
+  --shadow-card:  0 8px 32px rgba(0,0,80,0.3);
+  --transition:   all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--blue-deep);
+  color: var(--white);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ========== LOADING SCREEN ========== */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--blue-deep);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#loading-screen.hidden { opacity:0; visibility:hidden; }
+
+.loader-water {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  margin-bottom: 30px;
+}
+.loader-circle {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--cyan);
+  animation: spin 1.2s linear infinite;
+}
+.loader-circle:nth-child(2) {
+  inset: 12px;
+  border-top-color: var(--blue-accent);
+  animation-duration: 1.8s;
+  animation-direction: reverse;
+}
+.loader-circle:nth-child(3) {
+  inset: 24px;
+  border-top-color: var(--blue-light);
+  animation-duration: 2.4s;
+}
+.loader-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--cyan);
+  animation: pulse 2s ease infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.9)} }
+
+.loader-text {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--cyan-soft);
+  letter-spacing: 0.2em;
+  animation: fadeInUp 1s ease forwards;
+  text-align: center;
+}
+.loader-sub {
+  font-size: 0.85rem;
+  color: var(--white-muted);
+  letter-spacing: 0.15em;
+  margin-top: 8px;
+  opacity: 0;
+  animation: fadeInUp 1s ease 0.5s forwards;
+}
+.loader-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  overflow: hidden;
+}
+.loader-wave svg { width: 200%; animation: waveMove 3s linear infinite; }
+@keyframes waveMove { to { transform: translateX(-50%); } }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.dam-icon {
+  width: 0;
+  height: 0;
+  border-left: 40px solid #00bcd4;   /* warna bendungan */
+  border-top: 40px solid transparent;
+  border-bottom: 0 solid transparent;
+  margin: 0 auto 10px;
+  position: relative;
+}
+/* efek air */
+.dam-icon::after {
+  content: "";
+  position: absolute;
+  left: -40px;
+  top: 40px;
+  width: 80px;
+  height: 8px;
+  background: #00e5ff;
+  border-radius: 5px;
+}
+/* ========== ANIMATED BACKGROUND ========== */
+.bg-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.wave-bg {
+  position: absolute;
+  bottom: -50px;
+  left: -10%;
+  width: 120%;
+  opacity: 0.05;
+}
+.wave-bg.w2 { bottom: -30px; opacity: 0.04; animation-delay: -2s; }
+.wave-bg.w3 { bottom: -10px; opacity: 0.03; animation-delay: -4s; }
+.wave-bg svg { animation: waveSlow 12s ease-in-out infinite; }
+.wave-bg.w2 svg { animation-duration: 16s; animation-direction: reverse; }
+.wave-bg.w3 svg { animation-duration: 20s; }
+@keyframes waveSlow {
+  0%,100%{transform:translateX(0) scaleY(1)}
+  50%{transform:translateX(-3%) scaleY(1.05)}
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(0,229,255,0.3), transparent 70%);
+  animation: floatBubble linear infinite;
+}
+@keyframes floatBubble {
+  0%{transform:translateY(100vh) scale(0); opacity:0}
+  10%{opacity:1}
+  90%{opacity:0.5}
+  100%{transform:translateY(-100px) scale(1.2); opacity:0}
+}
+
+/* ========== NAVIGATION ========== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(10,22,40,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,229,255,0.15);
+  padding: 0 2rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-logo i { font-size: 1.4rem; }
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0.25rem;
+}
+.nav-links a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--white-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  transition: var(--transition);
+  position: relative;
+}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--cyan);
+  background: rgba(0,229,255,0.08);
+}
+.nav-links a.active::after {
+  content:'';
+  position:absolute;
+  bottom:4px; left:50%; transform:translateX(-50%);
+  width:20px; height:2px;
+  background: var(--cyan);
+  border-radius: 2px;
+}
+
+/* hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  width: 24px; height: 2px;
+  background: var(--cyan);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+.hamburger.open span:nth-child(1){ transform:rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2){ opacity:0; }
+.hamburger.open span:nth-child(3){ transform:rotate(-45deg) translate(5px,-5px); }
+
+/* mobile nav */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 70px; left:0; right:0;
+  background: rgba(10,22,40,0.97);
+  backdrop-filter: blur(20px);
+  z-index: 999;
+  padding: 1.5rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(0,229,255,0.15);
+}
+.mobile-nav a {
+  color: var(--white-muted);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mobile-nav a:hover { color: var(--cyan); background: rgba(0,229,255,0.08); }
+
+/* ========== PAGES ========== */
+.page {
+  display: none;
+  min-height: 100vh;
+  padding-top: 70px;
+  position: relative;
+  z-index: 1;
+  animation: pageIn 0.5s ease forwards;
+}
+.page.active { display: block; }
+@keyframes pageIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+/* ========== SECTION WRAPPER ========== */
+.section-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.section-header .eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.section-header .eyebrow::before,
+.section-header .eyebrow::after {
+  content:'';
+  flex:1;
+  max-width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan));
+}
+.section-header .eyebrow::after { background: linear-gradient(90deg, var(--cyan), transparent); }
+
+.section-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--white) 40%, var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.15;
+}
+
+/* ========== HOME / ABOUT ========== */
+.hero {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  width: 100%;
+}
+.hero-text .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,229,255,0.1);
+  border: 1px solid rgba(0,229,255,0.3);
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
+  font-size: 0.8rem;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+.hero-text h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+.hero-text h1 span {
+  background: linear-gradient(135deg, var(--cyan) 0%, var(--blue-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-text .subtitle {
+  font-size: 1.1rem;
+  color: var(--blue-light);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.hero-text .bio {
+  font-size: 0.95rem;
+  color: var(--white-muted);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+/* PERLU DIUBAH: ganti nama di bio dan subtitle */
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  border: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-accent), var(--cyan));
+  color: var(--blue-deep);
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.35); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(0,229,255,0.4);
+  color: var(--cyan);
+}
+.btn-outline:hover { background: rgba(0,229,255,0.1); transform:translateY(-2px); }
+
+/* Photo Frame */
+.hero-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.photo-frame {
+  position: relative;
+  width: 320px;
+  height: 320px;
+}
+.photo-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--cyan);
+  border-right-color: var(--blue-accent);
+  animation: spin 6s linear infinite;
+}
+.photo-ring-2 {
+  position: absolute;
+  inset: -22px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,229,255,0.3);
+  animation: spin 10s linear infinite reverse;
+}
+.photo-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+  border: 4px solid rgba(0,229,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+/* PERLU DIUBAH: ganti src foto di bawah ini */
+.photo-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.photo-placeholder {
+  font-size: 6rem;
+  color: rgba(0,229,255,0.4);
+}
+.photo-badge {
+  position: absolute;
+  bottom: 10px;
+  right: -10px;
+  background: linear-gradient(135deg, var(--blue-accent), var(--cyan));
+  color: var(--blue-deep);
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+  box-shadow: var(--shadow-card);
+}
+
+/* Stats row */
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-item .num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--cyan);
+  display: block;
+}
+.stat-item .lbl {
+  font-size: 0.75rem;
+  color: var(--white-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ========== CARD STYLE ========== */
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,229,255,0.12);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity:0;
+  transition: var(--transition);
+}
+.card:hover { border-color: rgba(0,229,255,0.3); transform:translateY(-4px); box-shadow: var(--shadow-card); }
+.card:hover::before { opacity:1; }
+
+/* ========== CV / RESUME PAGE ========== */
+.cv-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+}
+.cv-sidebar {
+  background: linear-gradient(180deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(0,229,255,0.15);
+}
+.cv-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.cv-photo-wrap {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.cv-photo {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--cyan);
+  display: block;
+  margin: 0 auto 1rem;
+  background: var(--blue-mid);
+}
+.cv-photo-icon {
+  width:130px; height:130px;
+  border-radius:50%;
+  border:3px solid var(--cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem; color: rgba(0,229,255,0.4);
+  background: var(--blue-mid);
+  margin: 0 auto 1rem;
+}
+.cv-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  text-align: center;
+}
+.cv-role {
+  font-size: 0.8rem;
+  color: var(--cyan);
+  text-align: center;
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+}
+
+.cv-section-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0,229,255,0.2);
+  padding-bottom: 0.5rem;
+  margin: 1.5rem 0 1rem;
+}
+.cv-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--white-muted);
+  margin-bottom: 0.6rem;
+}
+.cv-contact-item i { color: var(--cyan); width: 16px; font-size: 0.85rem; }
+
+.cv-skill-bar { margin-bottom: 0.9rem; }
+.cv-skill-bar .label {
+  font-size: 0.8rem;
+  color: var(--white-muted);
+  margin-bottom: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+}
+.bar-track { height: 5px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow:hidden; }
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-accent), var(--cyan));
+  border-radius: 5px;
+  animation: barGrow 1.5s ease forwards;
+  transform-origin: left;
+}
+@keyframes barGrow { from{width:0!important} }
+
+/* CV main sections */
+.cv-block {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,229,255,0.1);
+  border-radius: 14px;
+  padding: 1.75rem;
+}
+.cv-block-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cv-block-title i { color: var(--cyan); }
+
+.timeline-item {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 2px solid rgba(0,229,255,0.2);
+}
+.timeline-item::before {
+  content:'';
+  position:absolute;
+  left:-5px; top:4px;
+  width:8px; height:8px;
+  border-radius:50%;
+  background: var(--cyan);
+}
+.timeline-item:last-child { margin-bottom:0; }
+.tl-date { font-size:0.75rem; color:var(--cyan); margin-bottom:3px; }
+.tl-title { font-size:0.95rem; font-weight:600; color:var(--white); }
+.tl-place { font-size:0.82rem; color:var(--blue-light); margin-bottom:4px; }
+.tl-desc { font-size:0.82rem; color:var(--white-muted); line-height:1.6; }
+
+.download-area {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(33,150,243,0.08));
+  border: 1px solid rgba(0,229,255,0.2);
+  border-radius: 16px;
+  margin-bottom: 2rem;
+}
+.download-area p { font-size:0.9rem; color:var(--white-muted); margin-bottom:1.5rem; }
+
+/* ========== PORTFOLIO ========== */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.project-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,229,255,0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.project-card:hover { transform:translateY(-6px); box-shadow: var(--shadow-card); border-color: rgba(0,229,255,0.3); }
+.project-thumb {
+  height: 200px;
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.project-thumb::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(10,22,40,0.8));
+}.project-thumb {
+  width: 100%;
+  height: 200px; /* sesuaikan tinggi yang kamu mau */
+  overflow: hidden;
+  border-radius: 10px; /* opsional biar rapi */
+}
+
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.project-body { padding: 1.75rem; }
+.project-tags { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem; }
+.tag-badge {
+  background: rgba(0,229,255,0.1);
+  border: 1px solid rgba(0,229,255,0.25);
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.72rem;
+  color: var(--cyan);
+}
+.project-body h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.project-meta {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.meta-row { display:grid; grid-template-columns:90px 1fr; gap:0.5rem; font-size:0.82rem; }
+.meta-label { color:var(--cyan); font-weight:600; }
+.meta-value { color:var(--white-muted); line-height:1.5; }
+
+/* ========== SKILLS ========== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+.skills-group h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.skills-group h3 i { color:var(--cyan); }
+
+.skill-item {
+  margin-bottom: 1.2rem;
+}
+.skill-info { display:flex; justify-content:space-between; margin-bottom:0.4rem; }
+.skill-name { font-size:0.88rem; color:var(--white-muted); }
+.skill-pct { font-size:0.8rem; color:var(--cyan); font-weight:600; }
+
+.softskill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.softskill-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,229,255,0.12);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  transition: var(--transition);
+}
+.softskill-card:hover { border-color:rgba(0,229,255,0.35); transform:translateY(-3px); }
+.softskill-card .icon { font-size:2rem; margin-bottom:0.5rem; display:block; }
+.softskill-card .name { font-size:0.82rem; color:var(--white-muted); }
+
+/* Cert badges */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.cert-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,229,255,0.12);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  transition: var(--transition);
+}
+.cert-card:hover { border-color:rgba(0,229,255,0.3); }
+.cert-card i { font-size:1.5rem; color:var(--gold); }
+.cert-card .cert-name { font-size:0.82rem; color:var(--white); font-weight:500; }
+.cert-card .cert-org { font-size:0.72rem; color:var(--white-muted); }
+
+/* ========== CONTACT ========== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.contact-info { display:flex; flex-direction:column; gap:1.25rem; }
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,229,255,0.12);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.contact-item:hover { border-color:rgba(0,229,255,0.35); transform:translateX(6px); }
+.contact-icon {
+  width: 50px; height:50px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue-accent), var(--cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--blue-deep);
+  flex-shrink: 0;
+}
+.contact-lbl { font-size:0.75rem; color:var(--white-muted); }
+.contact-val { font-size:0.95rem; color:var(--white); font-weight:500; }
+
+.contact-form { display:flex; flex-direction:column; gap:1rem; }
+.form-group { display:flex; flex-direction:column; gap:0.4rem; }
+.form-group label { font-size:0.8rem; color:var(--blue-light); }
+.form-group input, .form-group textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0,229,255,0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: var(--transition);
+  resize: vertical;
+}
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--cyan);
+  background: rgba(0,229,255,0.05);
+}
+.form-group input::placeholder, .form-group textarea::placeholder { color:rgba(255,255,255,0.3); }
+
+/* ========== FOOTER ========== */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid rgba(0,229,255,0.1);
+  font-size: 0.82rem;
+  color: var(--white-muted);
+}
+footer span { color:var(--cyan); }
+
+/* ========== SCROLL TO TOP ========== */
+#scrollTop {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 44px; height:44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-accent), var(--cyan));
+  color: var(--blue-deep);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  z-index: 500;
+  opacity:0;
+  transform:translateY(20px);
+  transition: var(--transition);
+  box-shadow: 0 4px 16px rgba(0,229,255,0.4);
+}
+#scrollTop.visible { opacity:1; transform:translateY(0); }
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:900px) {
+  .hero-inner { grid-template-columns:1fr; text-align:center; }
+  .hero-photo { order:-1; }
+  .hero-cta { justify-content:center; }
+  .hero-stats { justify-content:center; }
+  .cv-layout { grid-template-columns:1fr; }
+  .contact-grid { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+  .hamburger { display:flex; }
+}
+@media(max-width:600px) {
+  .section-wrap { padding:3rem 1rem; }
+  .project-grid { grid-template-columns:1fr; }
+}
+
+/* tooltip helper */
+[data-edit]::after {
+  content: attr(data-edit);
+  display:none;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LOADING SCREEN ===== -->
+<div id="loading-screen">
+  <div class="loader-water">
+    <div class="loader-circle"></div>
+    <div class="loader-circle"></div>
+    <div class="loader-circle"></div>
+    <div class="loader-icon"><i class="fas fa-water"></i></div>
+  </div>
+  <div class="loader-text">LOADING</div>
+  <div class="loader-sub">Memuat…</div>
+  <div class="loader-wave">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1350,50 1440,40 L1440,80 L0,80 Z" fill="rgba(0,229,255,0.07)"/>
+      <path d="M0,50 C180,20 540,80 900,50 C1080,35 1260,65 1440,50 L1440,80 L0,80 Z" fill="rgba(33,150,243,0.05)"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ===== BACKGROUND ===== -->
+<div class="bg-canvas" id="bgCanvas">
+  <div class="wave-bg">
+    <svg viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,200 C240,100 480,300 720,200 C960,100 1200,300 1440,200 L1440,400 L0,400 Z" fill="rgba(0,229,255,1)"/>
+    </svg>
+  </div>
+  <div class="wave-bg w2">
+    <svg viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,220 C360,120 720,320 1080,220 C1260,170 1380,260 1440,220 L1440,400 L0,400 Z" fill="rgba(33,150,243,1)"/>
+    </svg>
+  </div>
+  <div class="wave-bg w3">
+    <svg viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,250 C180,150 540,350 900,250 C1080,200 1260,300 1440,250 L1440,400 L0,400 Z" fill="rgba(100,181,246,1)"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <div class="nav-logo">
+    <i class="fas fa-water"></i>
+    <!-- PERLU DIUBAH: Ganti inisial dengan nama Anda -->
+    <span>Moh.Nur Kholifatur Hikmah</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home',this)" class="active">Beranda</a></li>
+    <li><a href="#" onclick="showPage('cv',this)">CV / Resume</a></li>
+    <li><a href="#" onclick="showPage('portfolio',this)">Portofolio</a></li>
+    <li><a href="#" onclick="showPage('skills',this)">Keahlian</a></li>
+    <li><a href="#" onclick="showPage('contact',this)">Kontak</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#" onclick="showPage('home',null);closeMobileNav()"><i class="fas fa-home"></i> Beranda</a>
+  <a href="#" onclick="showPage('cv',null);closeMobileNav()"><i class="fas fa-file-alt"></i> CV / Resume</a>
+  <a href="#" onclick="showPage('portfolio',null);closeMobileNav()"><i class="fas fa-folder-open"></i> Portofolio</a>
+  <a href="#" onclick="showPage('skills',null);closeMobileNav()"><i class="fas fa-cogs"></i> Keahlian</a>
+  <a href="#" onclick="showPage('contact',null);closeMobileNav()"><i class="fas fa-envelope"></i> Kontak</a>
+</div>
+
+<!-- ==================== PAGE: HOME ==================== -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="tag"><i class="fas fa-water"></i> TRKBA </div>
+        <!-- PERLU DIUBAH: Ganti dengan nama lengkap Anda -->
+        <h1>Halo, Saya<br><span>Moh.Nur Kholifatur Hikmah</span></h1>
+        <!-- PERLU DIUBAH: Ganti dengan gelar/posisi Anda -->
+        <div class="subtitle">Mahasiswa Teknik Infrastruktur Sipil, ITS</div>
+        <!-- PERLU DIUBAH: Ganti dengan bio singkat Anda -->
+        <p class="bio">
+          Seorang mahasiswa Aktif Prodi Teknologi Rekayasa Konstruksi Bangunan Air Jurusan Teknik Infrastruktur Sipil ITS. Saya memiliki minat dalam perencanaan dan analisis infrastruktur yang berhubungan dengan keairan. Saya mampu berkerja secara individu maupun tim serta dapat mengatur waktu dengan Baik. Saya memiliki semangat yang tinggi dalam mempelajari hal baru baik softskill maupun hardskill yang dapat berguna bagi saya.
+</p>
+        </p>
+        <div class="hero-cta">
+          <a href="#" onclick="showPage('portfolio',null)" class="btn btn-primary"><i class="fas fa-folder-open"></i> Lihat Proyek</a>
+          <a href="#" onclick="showPage('cv',null)" class="btn btn-outline"><i class="fas fa-file-download"></i> Unduh CV</a>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+  <div class="photo-frame">
+    
+    <div class="photo-ring"></div>
+    <div class="photo-ring-2"></div>
+
+    <div class="photo-inner">
+      <img src="foto.jpg" alt="Foto Profesional">
+    </div>
+
+    <div class="photo-badge">⚙️💧 Civil<br>Engineering</div>
+
+  </div>
+</div>
+    </div>
+  </section>
+
+  <!-- About detail cards -->
+  <div class="section-wrap" style="padding-top:0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem">
+      <div class="card">
+        <i class="fas fa-tint" style="font-size:1.8rem;color:var(--cyan);margin-bottom:1rem;display:block"></i>
+        <h3 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:0.5rem">Hidrolika & Hidrologi</h3>
+        <!-- PERLU DIUBAH: Sesuaikan deskripsi keahlian -->
+        <p style="font-size:0.85rem;color:var(--white-muted);line-height:1.7">Analisis aliran air, debit banjir, dan pemodelan hidrologi untuk perancangan infrastruktur tahan bencana.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-water" style="font-size:1.8rem;color:var(--cyan);margin-bottom:1rem;display:block"></i>
+        <h3 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:0.5rem">Irigasi & Drainase</h3>
+        <p style="font-size:0.85rem;color:var(--white-muted);line-height:1.7">Perencanaan sistem irigasi pertanian dan drainase perkotaan yang efisien dan ramah lingkungan.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-bridge" style="font-size:1.8rem;color:var(--cyan);margin-bottom:1rem;display:block"></i>
+        <h3 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:0.5rem">Bangunan Air</h3>
+        <p style="font-size:0.85rem;color:var(--white-muted);line-height:1.7">Perancangan bendung, bendungan, dan infrastruktur pengendalian banjir dengan standar keamanan tertinggi.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-chart-line" style="font-size:1.8rem;color:var(--cyan);margin-bottom:1rem;display:block"></i>
+        <h3 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:0.5rem">Analisis Data</h3>
+        <p style="font-size:0.85rem;color:var(--white-muted);line-height:1.7">Pemodelan numerik dan analisis data curah hujan, debit, dan sedimentasi menggunakan software terkini.</p>
+      </div>
+    </div>
+  </div>
+  <footer><span>© 2026</span> — Dibuat  oleh <span>Moh.Nur Kholifatur H</span></footer>
+</div>
+
+<!-- ==================== PAGE: CV / RESUME ==================== -->
+<div id="page-cv" class="page">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="eyebrow"><i class="fas fa-file-alt"></i> Curriculum Vitae</div>
+      <h2>Tentang Saya</h2>
+    </div>
+
+    <div class="download-area">
+      <p>Unduh versi PDF dari CV saya untuk melihat Detail Lengkap.</p>
+      <!--
+        PERLU DIUBAH: Ganti href dengan link Google Drive / file PDF CV Anda
+        Cara: Upload PDF ke Google Drive → Share → "Anyone with link" → Copy link
+        Ganti "https://link-cv-anda.pdf" dengan link tersebut
+      -->
+      <a href="https://link-cv-anda.pdf" download class="btn btn-primary" target="_blank">
+        <i class="fas fa-file-pdf"></i> Unduh CV (PDF)
+      </a>
+    </div>
+
+    <div class="cv-layout">
+      <!-- SIDEBAR -->
+      <div class="cv-sidebar">
+        <div class="cv-photo-wrap">
+          <!--
+            PERLU DIUBAH: Sama seperti di beranda, ganti dengan foto Anda
+            <img src="foto-anda.jpg" alt="Foto" class="cv-photo">
+          -->
+          <img src="foto.jpg" class="cv-photo">
+          <!-- PERLU DIUBAH: Ganti nama -->
+          <div class="cv-name">Moh.Nur Kholifatur Hikmah</div>
+          <!-- PERLU DIUBAH: Ganti gelar/posisi -->
+          <div class="cv-role">Teknik Infrastruktur Sipil</div>
+        </div>
+
+        <div class="cv-section-title">Kontak</div>
+        <!-- PERLU DIUBAH: Semua informasi kontak di bawah ini -->
+        <div class="cv-contact-item"><i class="fas fa-envelope"></i> nurkholifatur1404@gmail.com</div>
+        <div class="cv-contact-item"><i class="fas fa-phone"></i> +62 85336205905</div>
+        <div class="cv-contact-item"><i class="fas fa-map-marker-alt"></i> Jl. Manyar Sabrangan V No 26B Surabaya</div>
+        <div class="cv-contact-item"><i class="fab fa-linkedin"></i> @moh-nur-kholifatur-h-9910</div>
+        <div class="cv-contact-item"><i class="fab fa-instagram"></i> @ftr_412</div>
+
+        <div class="cv-section-title">Keahlian Teknis</div>
+        <!-- PERLU DIUBAH: Nama skill dan persentase -->
+        <div class="cv-skill-bar">
+          <div class="label"><span>AutoCAD</span><span>85%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="cv-skill-bar">
+          <div class="label"><span>HEC-RAS</span><span>70%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="cv-skill-bar">
+          <div class="label"><span>GEOSTUDIO</span><span>75%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="cv-skill-bar">
+          <div class="label"><span>ArcGIS / QGIS</span><span>80%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="cv-skill-bar">
+          <div class="label"><span>Microsoft Office</span><span>80%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+        </div>
+
+        <div class="cv-section-title">Bahasa</div>
+        <div class="cv-contact-item"><i class="fas fa-circle" style="font-size:0.5rem"></i> Indonesia — Fasih</div>
+        <div class="cv-contact-item"><i class="fas fa-circle" style="font-size:0.5rem"></i> Inggris — Menengah</div>
+        <div class="cv-contact-item"><i class="fas fa-circle" style="font-size:0.5rem"></i> Madura — Menengah</div>
+        <div class="cv-contact-item"><i class="fas fa-circle" style="font-size:0.5rem"></i> Jawa — Sedikit</div>
+      </div>
+
+      <!-- MAIN -->
+      <div class="cv-main">
+        <!-- PROFIL -->
+        <div class="cv-block">
+          <div class="cv-block-title"><i class="fas fa-user-circle"></i> Profil Singkat</div>
+          <!-- PERLU DIUBAH: Ganti dengan ringkasan profesional Anda -->
+          <p style="font-size:0.88rem;color:var(--white-muted);line-height:1.8">
+            Mahasiswa aktif Teknik Infrastrukstur Sipil prodi Teknologi Rekayasa Bangunan Air. Berpengalaman dalam pembuatan Daerah aliran sungai, analisis banjir, perancangan sistem irigasi, dan pengelolaan drainase. Berkomitmen terhadap solusi teknik yang berkelanjutan dan berwawasan lingkungan.
+          </p>
+        </div>
+
+        <!-- PENDIDIKAN -->
+        <div class="cv-block">
+          <div class="cv-block-title"><i class="fas fa-graduation-cap"></i> Pendidikan</div>
+          <!-- PERLU DIUBAH: Ganti semua data pendidikan -->
+          <div class="timeline-item">
+            <div class="tl-date">2022 – Now </div>
+            <div class="tl-title">Teknik Infrastrukstur Sipil – Teknologi Rekayasa Konstruksi Bangunan Air</div>
+            <div class="tl-place">Institut Teknologi Sepuluh Nopember, Surabaya</div>
+            <div class="tl-desc">Tesis: "ALTERNATIF PENANGANAN STABILITAS LERENG GALIAN PADA BANGUNAN CONDUIT BENDUNGAN CABEAN" · IPK: [X.XX]/4.00</div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-date">2019 – 2022</div>
+            <div class="tl-title">SMA Negeri 3, Pamekasan</div>
+          </div>
+        </div>
+
+        <!-- PENGALAMAN -->
+        <div class="cv-block">
+          <div class="cv-block-title"><i class="fas fa-briefcase"></i> Pengalaman </div>
+          <!-- PERLU DIUBAH: Ganti semua data pengalaman kerja -->
+          <div class="timeline-item">
+            <div class="tl-date">2025 </div>
+            <div class="tl-title">Proyek Pembangunan Bendungan Cabean – Magang – Divisi Quality Surveyor</div>
+            <div class="tl-place">PT. Abipraya Abadi, KSO</div>
+            <div class="tl-desc">
+            <dd>1. Melakukan pengawasan mutu pekerjaan konstruksi bendungan, meliputi pekerjaan tanah, beton, dan struktur pendukung</dd>
+            <dd>2. Memastikan seluruh pekerjaan sesuai dengan spesifikasi teknis, gambar kerja, dan standar mutu yang berlaku.</dd>
+            <dd>3. Melakukan inspeksi lapangan dan pengujian material seperti uji kepadatan tanah, slump test beton, dan kuat tekan beton.</dd>
+            <dd>4. Mengontrol kualitas pekerjaan timbunan, termasuk pengecekan elevasi, ketebalan layer, dan kadar air optimum.</dd>
+            <dd>5. Menyusun laporan harian, mingguan, dan dokumentasi hasil pengujian serta inspeksi lapangan.</dd>
+            <dd>6. Mengidentifikasi ketidaksesuaian (non-conformance) dan memberikan rekomendasi tindakan perbaikan</dd></div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-date"> 2025  </div>
+            <div class="tl-title">Mata Kuliah Proyek Terintegrasi</div>
+            <div class="tl-place"> Perencanaan Penanggulangan Banjir ROB Akibat Luapan Sungai Bengawan Solo Pada Kecamatan Bungah, Dukuh DAN Manyar, Kabupaten Gresik</div>
+            <div class="tl-desc">Menganalisis stabilitas bangunan penanganan banjir yaitu Kolam retensi, sheetpile dan tanggul sungai agar bangunan stabil. Analisis dan perhitungan menggunakan ge</div>
+          </div>
+        </div>
+
+        <!-- ORGANISASI -->
+        <div class="cv-block">
+          <div class="cv-block-title"><i class="fas fa-users"></i> Organisasi & Kepanitiaan</div>
+          <!-- PERLU DIUBAH: Ganti data organisasi -->
+          <div class="timeline-item">
+            <div class="tl-date">2024 </div>
+            <div class="tl-title">Anggota Aktif – HMDS (Himpunan Mahasisiwa Diploma Sipil)</div>
+            <div class="tl-place">Divisi EMM (Entrepreneur and Money Maker)</div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-date">2023</div>
+            <div class="tl-title">Anggota Panitia – Dvillage 12th Edition</div>
+            <div class="tl-place">Divisi Cinnertion (Perlombahan Karya Tulis Ilmiah yang berfokus pada tema sipil keairan)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><span>© 2026</span> — <span>Moh.Nur Kholifatur Hikmah</span> · Teknik Infrastruktur Sipil</footer>
+</div>
+
+<!-- ==================== PAGE: PORTFOLIO ==================== -->
+<div id="page-portfolio" class="page">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="eyebrow"><i class="fas fa-folder-open"></i> Portofolio</div>
+      <h2>Proyek & Tugas yang Pernah Diikuti</h2>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb">
+        <img src="P1.jpg" alt="Proyek Saya">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag-badge">Hidrologi</span>
+          <span class="tag-badge">Arcgis</span>
+          <span class="tag-badge">Pengendalian Banjir</span>
+          <span class="tag-badge">Laboratorium</span>
+          <span class="tag-badge">Kontraktor</span>
+          <span class="tag-badge">Microsoft Word</span>
+          <span class="tag-badge">Microsoft Exel</span>
+        </div>
+        <h3>Proyek Pembangunan Bendungan Cabean – Magang – Divisi Quality Surveyor</h3>
+        <div class="project-meta">
+          <div class="meta-row">
+            <span class="meta-label">📌 Tujuan</span>
+            <span class="meta-value">Meningkatkan Ketahanan Pangan Melalui Suplai Irigasi, Menyediakan Air Baku, Mengendalikan Banjir, dan Mendukung Pengembangan Potensi Pariwisata.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">🔬 Metode</span>
+            <span class="meta-value">Untuk saat ini pembangunan masih dalam tahap pembuatan Saluran Pengelak Tipe Conduit (Terowongan) dengan metode Pengecoran yaitu Metode Papan Catur.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">✅ Manfaat</span>
+            <ul class="meta-list">
+              <li>Potensi Irigasi di Desa Karanganyar Kabupaten Blora Sebesar 80 Ha</li>
+              <li>Potensi Air Baku Kabupaten Blora, Kabupaten Pati sebesar 127 lt/dt</li>
+              <li>Potensi Mereduksi Banjir 4.11 m3/detik untuk Kala Ulang Banjir Q50</li>
+              <li>Potensi Pengembangan Wisata Air dan Agrowisata di Kabupaten Blora</li>
+            </ul>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">📅 Tahun</span>
+            <span class="meta-value">2025</span>
+          </div>
+        </div>
+      </div>
+    </div> </div> <footer><span>© 2026</span> — <span>Moh.Nur Kholifatur Hikmah</span> · Teknik Infrastruktur Sipil</footer>
+</div>
+<!-- ==================== PAGE: SKILLS ==================== -->
+<div id="page-skills" class="page">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="eyebrow"><i class="fas fa-cogs"></i> Kompetensi</div>
+      <h2>Keahlian Saya</h2>
+    </div>
+
+    <div class="skills-grid">
+      <!-- HARD SKILLS -->
+      <div class="card skills-group">
+        <h3><i class="fas fa-laptop-code"></i> Hard Skills – Perangkat Lunak</h3>
+        <!-- PERLU DIUBAH: Sesuaikan nama dan persentase skill -->
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">AutoCAD </span><span class="skill-pct">85%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">HEC-RAS / HEC-HMS</span><span class="skill-pct">70%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Geostudio (Seep/W & Slope/W)</span><span class="skill-pct">75%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Sketchup</span><span class="skill-pct">70%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">ArcGIS </span><span class="skill-pct">80%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Microsoft Office </span><span class="skill-pct">85%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+
+      <!-- TECHNICAL SKILLS -->
+      <div class="card skills-group">
+        <h3><i class="fas fa-water"></i> Hard Skills – Teknis Keairan</h3>
+        <!-- PERLU DIUBAH: Sesuaikan skill teknis -->
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Analisis Hidrologi</span><span class="skill-pct">85%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Hidraulika Saluran Terbuka</span><span class="skill-pct">70%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Perencanaan Irigasi</span><span class="skill-pct">75%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Perencanaan Drainase</span><span class="skill-pct">70%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Manajemen Proyek Konstruksi</span><span class="skill-pct">70%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-info"><span class="skill-name">Gambar DED & Spesifikasi Teknis</span><span class="skill-pct">70%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOFT SKILLS -->
+    <div style="margin-top:3rem">
+      <div class="section-header" style="margin-bottom:2rem">
+        <div class="eyebrow"><i class="fas fa-brain"></i> Soft Skills</div>
+        <h2 style="font-size:1.8rem">Kemampuan Interpersonal</h2>
+      </div>
+      <div class="softskill-grid">
+        <!-- PERLU DIUBAH: Tambah/hapus soft skill sesuai kepribadian Anda -->
+        <div class="softskill-card"><span class="icon">🤝</span><span class="name">Kerja Sama Tim</span></div>
+        <div class="softskill-card"><span class="icon">💬</span><span class="name">Komunikasi Efektif</span></div>
+        <div class="softskill-card"><span class="icon">🧩</span><span class="name">Pemecahan Masalah</span></div>
+        <div class="softskill-card"><span class="icon">⏰</span><span class="name">Manajemen Waktu</span></div>
+        <div class="softskill-card"><span class="icon">🎯</span><span class="name">Berpikir Kritis</span></div>
+        <div class="softskill-card"><span class="icon">📐</span><span class="name">Ketelitian Teknis</span></div>
+        <div class="softskill-card"><span class="icon">🚀</span><span class="name">Adaptif</span></div>
+      </div>
+    </div>
+
+    <!-- SERTIFIKASI -->
+    <div style="margin-top:3rem">
+      <div class="section-header" style="margin-bottom:2rem">
+        <div class="eyebrow"><i class="fas fa-certificate"></i> Sertifikasi</div>
+        <h2 style="font-size:1.8rem">Lisensi & Sertifikat</h2>
+      </div>
+      <div class="cert-grid">
+        <!-- PERLU DIUBAH: Ganti dengan sertifikasi yang Anda miliki -->
+        <div class="cert-card">
+          <i class="fas fa-certificate"></i>
+          <div><div class="cert-name">Webinar Kewirausahaan </div><div class="cert-org">EMM HMDS ITS·2024</div></div>
+        </div>
+        <div class="cert-card">
+          <i class="fas fa-award"></i>
+          <div><div class="cert-name">Dvillage 12th Edition (Panitia Cinnertion)</div><div class="cert-org">Dvillage HMDS ITS· 2023</div></div>
+        </div>
+        <div class="cert-card">
+          <i class="fas fa-shield-alt"></i>
+          <div><div class="cert-name">Pelatihan Basic Media Schooling 8.0 (BMS)</div><div class="cert-org">HMDS ITS · 2023</div></div>
+        </div>
+        <div class="cert-card">
+          <i class="fas fa-map"></i>
+          <div><div class="cert-name">Latihan Keterampilan Mahasiswa Kewirausahaan (LKMW)</div><div class="cert-org">Fakultas Vokasi ITS · 2022</div></div>
+        </div>
+      </div>
+    </div>
+</div> <footer><span>© 2026</span> — <span>Moh.Nur Kholifatur Hikmah</span> · Teknik Infrastruktur Sipil</footer>
+</div> ```
+
+<!-- ==================== PAGE: CONTACT ==================== -->
+<div id="page-contact" class="page">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="eyebrow"><i class="fas fa-envelope"></i> Hubungi Saya</div>
+      <h2>Mari Berteman</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <!-- PERLU DIUBAH: Semua info kontak di bawah ini -->
+        <a class="contact-item" href="mailto:email@anda.com">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div><div class="contact-lbl">Email</div><div class="contact-val">nurkholifatur1404@gmail.com</div></div>
+        </a>
+        <a class="contact-item" href="https://instagram.com/nama_anda" target="_blank">
+          <div class="contact-icon" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#f77737)"><i class="fab fa-instagram"></i></div>
+          <div><div class="contact-lbl">Instagram</div><div class="contact-val">@ftr_412</div></div>
+        </a>
+        <a class="contact-item" href="https://linkedin.com/in/nama-anda" target="_blank">
+          <div class="contact-icon" style="background:#0077b5"><i class="fab fa-linkedin-in"></i></div>
+          <div><div class="contact-lbl">LinkedIn</div><div class="contact-val">@moh-nur-kholifatur-h-9910</div></div>
+        </a>
+        <a class="contact-item" href="https://wa.me/628xxxxxxxxxx" target="_blank">
+          <div class="contact-icon" style="background:#25d366"><i class="fab fa-whatsapp"></i></div>
+          <!-- PERLU DIUBAH: Ganti nomor WhatsApp -->
+          <div><div class="contact-lbl">WhatsApp</div><div class="contact-val">+62 85336205905</div></div>
+        </a>
+        <!-- OPSIONAL: tambah kontak lain seperti GitHub -->
+        <!--
+        <a class="contact-item" href="https://github.com/nama-anda" target="_blank">
+          <div class="contact-icon" style="background:#333"><i class="fab fa-github"></i></div>
+          <div><div class="contact-lbl">GitHub</div><div class="contact-val">github.com/nama-anda</div></div>
+        </a>
+        -->
+
+        <div class="card" style="margin-top:1rem">
+          <div style="font-size:0.85rem;color:var(--white-muted);line-height:1.8">
+            <i class="fas fa-map-marker-alt" style="color:var(--cyan);margin-right:8px"></i>
+            <!-- PERLU DIUBAH: Alamat/lokasi Anda -->
+            Jl.Manyar Sabrangan V No 26B ,Surabaya, Jawa Timur, Indonesia<br><br>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM PESAN -->
+      <div class="card">
+        <h3 style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:1.5rem;color:var(--white)">
+          <i class="fas fa-paper-plane" style="color:var(--cyan);margin-right:8px"></i>Kirim Pesan
+        </h3>
+        <!--
+          PERLU DIUBAH: Formulir ini menggunakan Formspree (gratis).
+          Cara setup:
+          1. Daftar di https://formspree.io
+          2. Buat form baru
+          3. Ganti "YOUR_FORM_ID" di action dengan ID form Anda
+          Contoh: action="https://formspree.io/f/abcdefgh"
+        -->
+        <form action="https://formspree.io/f/maqangzj" method="POST" class="contact-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" name="name" placeholder="Nama Anda" required>
+          </div>
+          <div class="form-group">
+            <label>Alamat Email</label>
+            <input type="email" name="email" placeholder="email@anda.com" required>
+          </div>
+          <div class="form-group">
+            <label>Subjek</label>
+            <input type="text" name="subject" placeholder="Topik pesan">
+          </div>
+          <div class="form-group">
+            <label>Pesan</label>
+            <textarea name="message" rows="5" placeholder="Tuliskan pesan atau pertanyaan Anda di sini…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+            <i class="fas fa-paper-plane"></i> Kirim Pesan
+          </button>
+          <div id="form-status" style="display:none;text-align:center;padding:0.75rem;border-radius:8px;font-size:0.85rem;margin-top:0.5rem"></div>
+        </form>
+      </div>
+    </div>
+</div> <footer><span>© 2026</span> — <span>Moh.Nur Kholifatur Hikmah</span> · Teknik Infrastruktur Sipil</footer>
+</div> ```
+
+<!-- Scroll to top -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ---- Loading Screen ----
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loading-screen').classList.add('hidden');
+    generateBubbles();
+  }, 2200);
+});
+
+// ---- Page Navigation ----
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  triggerBarAnimations();
+}
+
+// ---- Mobile Nav ----
+function toggleMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  const ham = document.getElementById('hamburger');
+  const open = nav.style.display === 'flex';
+  nav.style.display = open ? 'none' : 'flex';
+  ham.classList.toggle('open', !open);
+}
+function closeMobileNav() {
+  document.getElementById('mobileNav').style.display = 'none';
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+// ---- Skill Bar Animation ----
+function triggerBarAnimations() {
+  document.querySelectorAll('.bar-fill').forEach(bar => {
+    const w = bar.style.width;
+    bar.style.width = '0';
+    requestAnimationFrame(() => {
+      setTimeout(() => { bar.style.width = w; }, 50);
+    });
+  });
+}
+
+// ---- Bubbles Background ----
+function generateBubbles() {
+  const canvas = document.getElementById('bgCanvas');
+  for (let i = 0; i < 12; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = Math.random() * 60 + 20;
+    b.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      animation-duration:${Math.random()*15+10}s;
+      animation-delay:-${Math.random()*10}s;
+    `;
+    canvas.appendChild(b);
+  }
+}
+
+// ---- Scroll to Top ----
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTop');
+  btn.classList.toggle('visible', window.scrollY > 300);
+});
+
+// ---- Form Submit ----
+function handleFormSubmit(e) {
+  const status = document.getElementById('form-status');
+  status.style.display = 'block';
+  // If Formspree not configured, show info
+  status.style.background = 'rgba(0,229,255,0.1)';
+  status.style.border = '1px solid rgba(0,229,255,0.3)';
+  status.style.color = 'var(--cyan)';
+  status.textContent = 'Pesan terkirim! Terima kasih telah menghubungi saya.';
+}
+
+// ---- Active nav on init ----
+document.querySelector('.nav-links a').classList.add('active');
+</script>
+</body>
+</html>
